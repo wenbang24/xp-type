@@ -33,13 +33,13 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         elif self.originalText[n] == "<":
             styled_text = (
                 f'<span style="color: white;">{self.originalText[:n]}</span>'
-                f'<span style="color: {"grey" if not wrong else "red"}; text-decoration: underline;"> </span>'
+                f'<span style="color: {"grey" if not wrong else "#f38ba8"}; text-decoration: underline;"> </span>'
                 f'<span style="color: grey;">{self.originalText[n:]}</span>'
             )
         else:
             styled_text = (
                 f'<span style="color: white;">{self.originalText[:n]}</span>'
-                f'<span style="color: {"grey" if not wrong else "red"}; text-decoration: underline;">{self.originalText[n]}</span>'
+                f'<span style="color: {"grey" if not wrong else "#f38ba8"}; text-decoration: underline;">{self.originalText[n]}</span>'
                 f'<span style="color: grey;">{self.originalText[n + 1:]}</span>'
             )
         self.label.setText(styled_text)
