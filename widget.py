@@ -1,5 +1,6 @@
 import sys
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt
 import random
 from MainWindow import Ui_XPType
 from time import time
@@ -22,6 +23,13 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.pushButton.clicked.connect(self.generateText)
         self.pushButton.setAutoDefault(False)
         self.pushButton.setDefault(False)
+        try:
+            self.pushButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        except AttributeError:
+            try:
+                self.pushButton.setFocusPolicy(Qt.NoFocus)
+            except AttributeError:
+                print("cry about it")
         self.index = 0
         self.startTime = None
 
@@ -47,7 +55,6 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.label.setText(styled_text)
 
     def keyPressEvent(self, a0):
-        key = a0.key()
         text = a0.text()
         if self.startTime is None:
             self.startTime = time()
