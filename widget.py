@@ -32,15 +32,15 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
             styled_text = f'<span style="color: white;">{self.originalText}</span>'
         elif self.originalText[n] == "<":
             styled_text = (
-                f'<span style="color: white;">{self.originalText[:n]}</span>'
-                f'<span style="color: {"grey" if not wrong else "#f38ba8"}; text-decoration: underline;"> </span>'
-                f'<span style="color: grey;">{self.originalText[n:]}</span>'
+                '<span style="color: white;">{}</span>'.format(self.originalText[:n]) +
+                '<span style="color: {}; text-decoration: underline;"> </span>'.format("grey" if not wrong else "#f38ba8") +
+                '<span style="color: grey;">{}</span>'.format(self.originalText[n:])
             )
         else:
             styled_text = (
-                f'<span style="color: white;">{self.originalText[:n]}</span>'
-                f'<span style="color: {"grey" if not wrong else "#f38ba8"}; text-decoration: underline;">{self.originalText[n]}</span>'
-                f'<span style="color: grey;">{self.originalText[n + 1:]}</span>'
+                '<span style="color: white;">{}</span>'.format(self.originalText[:n]) +
+                '<span style="color: {}; text-decoration: underline;">{}</span>'.format("grey" if not wrong else "#f38ba8", self.originalText[n]) +
+                '<span style="color: grey;">{}</span>'.format(self.originalText[n + 1:])
             )
         self.label.setText(styled_text)
 
