@@ -44,8 +44,8 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         width = self.width()
         font = self.label.font()
         font_size = font.pointSize()
-        charactersPerLine = width // font_size - 6
-        lines = height // font_size - 6
+        charactersPerLine = int((1.5 * width) // font_size - 6)
+        lines = int((height // (1.5 * font_size)) - 6)
         text = ""
         for _ in range(lines):
             line = ""
