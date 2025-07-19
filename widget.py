@@ -1,5 +1,5 @@
 import sys
-from PyQt5 import QtWidgets, uic, QtCore, QtGui
+from PyQt5 import QtWidgets
 import random
 from MainWindow import Ui_XPType
 from time import time
@@ -27,19 +27,19 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.label.setText(text)
         self.originalText = text
 
-    def colorWords(self, n):
+    def colorWords(self, n, wrong = False):
         if n == len(self.originalText):
             styled_text = f'<span style="color: white;">{self.originalText}</span>'
         elif self.originalText[n] == "<":
             styled_text = (
                 f'<span style="color: white;">{self.originalText[:n]}</span>'
-                f'<span style="color: grey; text-decoration: underline;"> </span>'
+                f'<span style="color: {"grey" if not wrong else "red"}; text-decoration: underline;"> </span>'
                 f'<span style="color: grey;">{self.originalText[n:]}</span>'
             )
         else:
             styled_text = (
                 f'<span style="color: white;">{self.originalText[:n]}</span>'
-                f'<span style="color: grey; text-decoration: underline;">{self.originalText[n]}</span>'
+                f'<span style="color: {"grey" if not wrong else "red"}; text-decoration: underline;">{self.originalText[n]}</span>'
                 f'<span style="color: grey;">{self.originalText[n + 1:]}</span>'
             )
         self.label.setText(styled_text)
@@ -55,6 +55,8 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
                 self.index += 3 # Skip over "<br>"
             self.index += 1
             self.colorWords(self.index)
+        elif self.index < len(self.originalText):
+            self.colorWords(self.index, True)
         if self.index < len(self.originalText):
             wpm = int((self.index * 12) / (time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
             self.wpm_label.setText(f"WPM: {wpm}")
