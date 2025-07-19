@@ -59,7 +59,8 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         if self.index < len(self.originalText):
             wpm = int((self.index * 12) / (time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
             self.wpm_label.setText("WPM: " + str(wpm))
-        super().keyPressEvent(a0)
+        if text != " ": # this triggers reset on XP
+            super().keyPressEvent(a0)
 
     def generateText(self):
         height = self.height()
