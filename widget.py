@@ -2,6 +2,7 @@ import sys
 from PyQt5 import QtWidgets, uic, QtCore, QtGui
 import random
 from MainWindow import Ui_XPType
+from time import time
 
 with open("google-10000-english-no-swears.txt", "r") as f:
     global words, wordsByLen
@@ -20,6 +21,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.originalText = self.label.text()
         self.pushButton.clicked.connect(self.generateText)
         self.index = 0
+        self.startTime = None
 
     def update_label(self, text):
         self.label.setText(text)
@@ -44,6 +46,8 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         key = a0.key()
         text = a0.text()
         print(f"Key Pressed: {key}, Text: '{text}'")
+        if self.startTime is None:
+            self.startTime = time()
         if text == self.originalText[self.index] or text == " " and self.originalText[self.index] == "<":
             if self.originalText[self.index] == "<":
                 self.index += 3 # Skip over "<br>"
@@ -53,8 +57,9 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
                 self.generateText()
             else:
                 self.colorWords(self.index)
-            wpm = int((self.index / 5) / (self.label.text().count("<br>") + 1) * 60)
-            self.wpm_label.setText(f"WPM: {wpm}")
+        print(time() - self.startTime, (self.index / 5) / (time() - self.startTime))
+        wpm = int((self.index * 12) / (time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
+        self.wpm_label.setText(f"WPM: {wpm}")
 
         super().keyPressEvent(a0)
 

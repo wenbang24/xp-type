@@ -36,7 +36,7 @@
      </property>
      <property name="font">
       <font>
-       <family>Fira Code</family>
+       <family>Courier New</family>
        <pointsize>16</pointsize>
       </font>
      </property>
@@ -49,8 +49,8 @@
     <widget class="QLabel" name="label">
      <property name="font">
       <font>
-       <family>Fira Code</family>
-       <pointsize>22</pointsize>
+       <family>Courier New</family>
+       <pointsize>32</pointsize>
       </font>
      </property>
      <property name="text">
