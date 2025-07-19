@@ -16,13 +16,21 @@ class Ui_XPType(object):
         XPType.setObjectName("XPType")
         XPType.resize(800, 600)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(80)
-        sizePolicy.setVerticalStretch(100)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(XPType.sizePolicy().hasHeightForWidth())
         XPType.setSizePolicy(sizePolicy)
         XPType.setMinimumSize(QtCore.QSize(800, 600))
         self.verticalLayout = QtWidgets.QVBoxLayout(XPType)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.wpm_label = QtWidgets.QLabel(XPType)
+        self.wpm_label.setMaximumSize(QtCore.QSize(16777215, 30))
+        font = QtGui.QFont()
+        font.setFamily("Fira Code")
+        font.setPointSize(16)
+        self.wpm_label.setFont(font)
+        self.wpm_label.setObjectName("wpm_label")
+        self.verticalLayout.addWidget(self.wpm_label)
         self.label = QtWidgets.QLabel(XPType)
         font = QtGui.QFont()
         font.setFamily("Fira Code")
@@ -30,6 +38,9 @@ class Ui_XPType(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
+        self.pushButton = QtWidgets.QPushButton(XPType)
+        self.pushButton.setObjectName("pushButton")
+        self.verticalLayout.addWidget(self.pushButton)
 
         self.retranslateUi(XPType)
         QtCore.QMetaObject.connectSlotsByName(XPType)
@@ -37,6 +48,8 @@ class Ui_XPType(object):
     def retranslateUi(self, XPType):
         _translate = QtCore.QCoreApplication.translate
         XPType.setWindowTitle(_translate("XPType", "XP-Type"))
+        self.wpm_label.setText(_translate("XPType", "WPM: 0"))
         self.label.setText(_translate("XPType", "hello world random words lorem\n"
 "ipsum something something what if its\n"
 "too long"))
+        self.pushButton.setText(_translate("XPType", "PushButton"))

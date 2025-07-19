@@ -4,7 +4,7 @@ from PyQt5 import QtWidgets, uic, QtCore, QtGui
 from MainWindow import Ui_XPType
 
 
-class XPType(QtWidgets.QMainWindow, Ui_XPType):
+class XPType(QtWidgets.QWidget, Ui_XPType):
     def __init__(self, *args, obj=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
@@ -14,7 +14,7 @@ class XPType(QtWidgets.QMainWindow, Ui_XPType):
         self.label.setText(text)
         self.originalText = text
 
-    def color(self, n):
+    def colorWords(self, n):
         styled_text = (
             f'<span style="color: white;">{self.originalText[:n]}</span>'
             f'<span style="color: grey;">{self.originalText[n:]}</span>'
