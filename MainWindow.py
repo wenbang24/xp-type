@@ -20,7 +20,7 @@ class Ui_XPType(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(XPType.sizePolicy().hasHeightForWidth())
         XPType.setSizePolicy(sizePolicy)
-        XPType.setMinimumSize(QtCore.QSize(800, 600))
+        XPType.setMinimumSize(QtCore.QSize(400, 400))
         self.verticalLayout = QtWidgets.QVBoxLayout(XPType)
         self.verticalLayout.setObjectName("verticalLayout")
         self.wpm_label = QtWidgets.QLabel(XPType)

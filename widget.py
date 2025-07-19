@@ -28,7 +28,9 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.originalText = text
 
     def colorWords(self, n):
-        if self.originalText[n] == "<":
+        if n == len(self.originalText):
+            styled_text = f'<span style="color: white;">{self.originalText}</span>'
+        elif self.originalText[n] == "<":
             styled_text = (
                 f'<span style="color: white;">{self.originalText[:n]}</span>'
                 f'<span style="color: grey; text-decoration: underline;"> </span>'
@@ -48,19 +50,14 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         print(f"Key Pressed: {key}, Text: '{text}'")
         if self.startTime is None:
             self.startTime = time()
-        if text == self.originalText[self.index] or text == " " and self.originalText[self.index] == "<":
+        if self.index < len(self.originalText) and (text == self.originalText[self.index] or (text == " " and self.originalText[self.index] == "<")):
             if self.originalText[self.index] == "<":
                 self.index += 3 # Skip over "<br>"
             self.index += 1
-            if self.index >= len(self.originalText):
-                self.index = 0
-                self.generateText()
-            else:
-                self.colorWords(self.index)
-        print(time() - self.startTime, (self.index / 5) / (time() - self.startTime))
-        wpm = int((self.index * 12) / (time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
-        self.wpm_label.setText(f"WPM: {wpm}")
-
+            self.colorWords(self.index)
+        if self.index < len(self.originalText):
+            wpm = int((self.index * 12) / (time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
+            self.wpm_label.setText(f"WPM: {wpm}")
         super().keyPressEvent(a0)
 
     def generateText(self):
@@ -68,8 +65,8 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         width = self.width()
         font = self.label.font()
         font_size = font.pointSize()
-        charactersPerLine = int((1.5 * width) // font_size - 6)
-        lines = int((height // (1.5 * font_size)) - 6)
+        charactersPerLine = int((1.5 * width) // font_size)
+        lines = int((height // (1.5 * font_size)))
         text = ""
         for _ in range(lines):
             line = ""
@@ -82,7 +79,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
                 line += word + " "
             line = line.strip()
             text += line + "<br>"
-        text = text.strip()
+        text = text[:-4]  # Remove the last "<br>"
         self.update_label(text)
         self.colorWords(0)
         self.index = 0
