@@ -1,5 +1,10 @@
 [project]
-name = "PySide Widgets Project"
+name = "XPType"
+version = "0.0.1"
+description = "A typing practice tool for Windows XP"
+authors = [
+    { name = "wenbang24" }
+]
 
 [tool.pyside6-project]
 files = ["widget.py", "form.ui"]
