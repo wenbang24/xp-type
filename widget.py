@@ -20,6 +20,8 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.setupUi(self)
         self.originalText = self.label.text()
         self.pushButton.clicked.connect(self.generateText)
+        self.pushButton.setAutoDefault(False)
+        self.pushButton.setDefault(False)
         self.index = 0
         self.startTime = None
 
@@ -59,8 +61,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         if self.index < len(self.originalText):
             wpm = int((self.index * 12) / max(0.0001, time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
             self.wpm_label.setText("WPM: " + str(wpm))
-        if text != " ": # this triggers reset on XP
-            super().keyPressEvent(a0)
+        super().keyPressEvent(a0)
 
     def generateText(self):
         height = self.height()
