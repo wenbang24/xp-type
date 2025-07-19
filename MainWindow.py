@@ -52,4 +52,4 @@ class Ui_XPType(object):
         self.label.setText(_translate("XPType", "hello world random words lorem\n"
 "ipsum something something what if its\n"
 "too long"))
-        self.pushButton.setText(_translate("XPType", "PushButton"))
+        self.pushButton.setText(_translate("XPType", "Reset"))
