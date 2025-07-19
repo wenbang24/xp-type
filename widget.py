@@ -19,6 +19,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.setupUi(self)
         self.originalText = self.label.text()
         self.pushButton.clicked.connect(self.generateText)
+        self.index = 0
 
     def update_label(self, text):
         self.label.setText(text)
@@ -34,8 +35,18 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
     def keyPressEvent(self, a0):
         key = a0.key()
         text = a0.text()
-
         print(f"Key Pressed: {key}, Text: '{text}'")
+        if text == self.originalText[self.index] or text == " " and self.originalText[self.index] == "<":
+            if self.originalText[self.index] == "<":
+                self.index += 3 # Skip over "<br>"
+            self.index += 1
+            if self.index >= len(self.originalText):
+                self.index = 0
+                self.generateText()
+            else:
+                self.colorWords(self.index)
+            wpm = int((self.index / 5) / (self.label.text().count("<br>") + 1) * 60)
+            self.wpm_label.setText(f"WPM: {wpm}")
 
         super().keyPressEvent(a0)
 
@@ -61,7 +72,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         text = text.strip()
         self.update_label(text)
         self.colorWords(0)
-
+        self.index = 0
 
 app = QtWidgets.QApplication(sys.argv)
 
@@ -69,5 +80,4 @@ window = XPType()
 window.show()
 
 window.generateText()
-
 app.exec()
