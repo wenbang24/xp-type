@@ -29,7 +29,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
 
     def colorWords(self, n, wrong = False):
         if n == len(self.originalText):
-            styled_text = f'<span style="color: white;">{self.originalText}</span>'
+            styled_text = '<span style="color: white;">{}</span>'.format(self.originalText)
         elif self.originalText[n] == "<":
             styled_text = (
                 '<span style="color: white;">{}</span>'.format(self.originalText[:n]) +
@@ -47,7 +47,6 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
     def keyPressEvent(self, a0):
         key = a0.key()
         text = a0.text()
-        print(f"Key Pressed: {key}, Text: '{text}'")
         if self.startTime is None:
             self.startTime = time()
         if self.index < len(self.originalText) and (text == self.originalText[self.index] or (text == " " and self.originalText[self.index] == "<")):
@@ -59,7 +58,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
             self.colorWords(self.index, True)
         if self.index < len(self.originalText):
             wpm = int((self.index * 12) / (time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
-            self.wpm_label.setText(f"WPM: {wpm}")
+            self.wpm_label.setText("WPM: " + str(wpm))
         super().keyPressEvent(a0)
 
     def generateText(self):
