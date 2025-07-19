@@ -26,10 +26,18 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.originalText = text
 
     def colorWords(self, n):
-        styled_text = (
-            f'<span style="color: white;">{self.originalText[:n]}</span>'
-            f'<span style="color: grey;">{self.originalText[n:]}</span>'
-        )
+        if self.originalText[n] == "<":
+            styled_text = (
+                f'<span style="color: white;">{self.originalText[:n]}</span>'
+                f'<span style="color: grey; text-decoration: underline;"> </span>'
+                f'<span style="color: grey;">{self.originalText[n:]}</span>'
+            )
+        else:
+            styled_text = (
+                f'<span style="color: white;">{self.originalText[:n]}</span>'
+                f'<span style="color: grey; text-decoration: underline;">{self.originalText[n]}</span>'
+                f'<span style="color: grey;">{self.originalText[n + 1:]}</span>'
+            )
         self.label.setText(styled_text)
 
     def keyPressEvent(self, a0):
