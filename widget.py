@@ -35,7 +35,4 @@ app = QtWidgets.QApplication(sys.argv)
 window = XPType()
 window.show()
 
-for i in range(20):
-    QtCore.QTimer.singleShot(i * 1000, lambda: window.color(i))
-
 app.exec()
