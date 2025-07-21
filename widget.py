@@ -31,7 +31,6 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.originalText = ""
         self.charactersPerLine = 0
         self.typed = ""
-        self.index = 0
         self.startTime = None
 
         self.label.setWordWrap(True)
@@ -71,34 +70,14 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.label.setText(coloredText)
         return correct
 
-    """
-    def colorWords(self, n, wrong = False):
-        if n == len(self.originalText):
-            styled_text = '<span style="color: white;">{}</span>'.format(self.originalText)
-        elif self.originalText[n] == "<":
-            styled_text = (
-                '<span style="color: white;">{}</span>'.format(self.originalText[:n]) +
-                '<span style="color: {}; text-decoration: underline;"> </span>'.format("grey" if not wrong else "#f38ba8") +
-                '<span style="color: grey;">{}</span>'.format(self.originalText[n:])
-            )
-        else:
-            styled_text = (
-                '<span style="color: white;">{}</span>'.format(self.originalText[:n]) +
-                '<span style="color: {}; text-decoration: underline;">{}</span>'.format("grey" if not wrong else "#f38ba8", self.originalText[n]) +
-                '<span style="color: grey;">{}</span>'.format(self.originalText[n + 1:])
-            )
-        self.label.setText(styled_text)
-    """
-
     def keyPressEvent(self, a0):
         text = a0.text()
+        correct = 0
         if self.startTime is None:
             self.startTime = time()
-        if self.index < len(self.originalText):
+        if len(self.typed) < len(self.originalText):
             self.typed += text
             correct = self.update_label()
-
-        if self.index < len(self.originalText):
             rawWpm = int((len(self.typed) * 12) / max(0.0001, time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
             wpm = int((correct * 12) / max(0.0001, time() - self.startTime))
             self.wpm_label.setText("Raw WPM: " + str(rawWpm) + " | WPM: " + str(wpm))
@@ -126,9 +105,9 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
 
         # reset stuff
         self.typed = ""
+        self.wpm_label.setText("Raw WPM: 0 | WPM: 0")
         self.originalText = text
         self.update_label()
-        self.index = 0
         self.startTime = None
 
 app = QtWidgets.QApplication(sys.argv)
