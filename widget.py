@@ -4,8 +4,16 @@ from PyQt5.QtCore import Qt
 import random
 from MainWindow import Ui_XPType
 from time import time
+import os
 
-with open("google-10000-english-no-swears.txt", "r") as f:
+if getattr(sys, 'frozen', False):
+    base = sys._MEIPASS
+else:
+    base = os.path.dirname(__file__)
+
+path = os.path.join(base, 'google-10000-english-no-swears.txt')
+
+with open(path, "r") as f:
     global words, wordsByLen
     words = list(f.read().split())
     wordsByLen = dict()
@@ -75,7 +83,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         width = self.width()
         font = self.label.font()
         font_size = font.pointSize()
-        charactersPerLine = int((2 * width) // font_size)
+        charactersPerLine = int((width) // font_size)
         lines = int((height // (2 * font_size)))
         text = ""
         for _ in range(lines):
