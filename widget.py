@@ -55,10 +55,12 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
 
     def update_label(self):
         coloredText = ""
+        correct = 0
         for i in range(len(self.originalText)):
             if i < len(self.typed):
                 if self.typed[i] == self.originalText[i]:
                     coloredText += '<span style="color: white;">{}</span>'.format(self.typed[i])
+                    correct += 1
                 else:
                     coloredText += '<span style="color: #f38ba8; text-decoration: underline;">{}</span>'.format(self.typed[i])
             elif i == len(self.typed):
@@ -67,6 +69,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
                 coloredText += '<span style="color: grey;">{}</span>'.format(self.originalText[i])
             coloredText += "&#8203;"
         self.label.setText(coloredText)
+        return correct
 
     """
     def colorWords(self, n, wrong = False):
@@ -92,13 +95,13 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         if self.startTime is None:
             self.startTime = time()
         if self.index < len(self.originalText):
-            self.index += 1
             self.typed += text
-            self.update_label()
+            correct = self.update_label()
 
         if self.index < len(self.originalText):
-            wpm = int((self.index * 12) / max(0.0001, time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
-            self.wpm_label.setText("WPM: " + str(wpm))
+            rawWpm = int((len(self.typed) * 12) / max(0.0001, time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
+            wpm = int((correct * 12) / max(0.0001, time() - self.startTime))
+            self.wpm_label.setText("Raw WPM: " + str(rawWpm) + " | WPM: " + str(wpm))
         super().keyPressEvent(a0)
 
     def generateText(self):
