@@ -27,7 +27,14 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
     def __init__(self, *args, obj=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
-        self.originalText = self.label.text()
+
+        self.originalText = ""
+        self.charactersPerLine = 0
+        self.typed = ""
+        self.index = 0
+        self.startTime = None
+
+        self.label.setWordWrap(True)
         self.pushButton.clicked.connect(self.generateText)
         self.pushButton.setAutoDefault(False)
         self.pushButton.setDefault(False)
@@ -45,13 +52,23 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
                 self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
             except AttributeError:
                 print("keep crying about it")
-        self.index = 0
-        self.startTime = None
 
-    def update_label(self, text):
-        self.label.setText(text)
-        self.originalText = text
+    def update_label(self):
+        coloredText = ""
+        for i in range(len(self.originalText)):
+            if i < len(self.typed):
+                if self.typed[i] == self.originalText[i]:
+                    coloredText += '<span style="color: white;">{}</span>'.format(self.typed[i])
+                else:
+                    coloredText += '<span style="color: #f38ba8; text-decoration: underline;">{}</span>'.format(self.typed[i])
+            elif i == len(self.typed):
+                coloredText += '<span style="color: grey; text-decoration: underline;">{}</span>'.format(self.originalText[i])
+            else:
+                coloredText += '<span style="color: grey;">{}</span>'.format(self.originalText[i])
+            coloredText += "&#8203;"
+        self.label.setText(coloredText)
 
+    """
     def colorWords(self, n, wrong = False):
         if n == len(self.originalText):
             styled_text = '<span style="color: white;">{}</span>'.format(self.originalText)
@@ -68,30 +85,28 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
                 '<span style="color: grey;">{}</span>'.format(self.originalText[n + 1:])
             )
         self.label.setText(styled_text)
+    """
 
     def keyPressEvent(self, a0):
         text = a0.text()
         if self.startTime is None:
             self.startTime = time()
-        if self.index < len(self.originalText) and (text == self.originalText[self.index] or (text == " " and self.originalText[self.index] == "<")):
-            if self.originalText[self.index] == "<":
-                self.index += 3 # Skip over "<br>"
+        if self.index < len(self.originalText):
             self.index += 1
-            self.colorWords(self.index)
-        elif self.index < len(self.originalText):
-            self.colorWords(self.index, True)
+            self.typed += text
+            self.update_label()
+
         if self.index < len(self.originalText):
             wpm = int((self.index * 12) / max(0.0001, time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
             self.wpm_label.setText("WPM: " + str(wpm))
         super().keyPressEvent(a0)
 
     def generateText(self):
-        height = self.height()
-        width = self.width()
-        font = self.label.font()
-        font_size = font.pointSize()
-        charactersPerLine = int((width) // font_size)
-        lines = int((height // (2 * font_size)))
+        width, height = self.width(), self.height()
+        font_size = self.label.font().pointSize()
+        charactersPerLine = int(width // font_size)
+        self.charactersPerLine = charactersPerLine
+        lines = int(height // (2 * font_size))
         text = ""
         for _ in range(lines):
             line = ""
@@ -102,12 +117,16 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
                     if remCharacters > 0:
                         word = random.choice(wordsByLen.get(remCharacters, words))
                 line += word + " "
-            line = line.strip()
-            text += line + "<br>"
-        text = text[:-4]  # Remove the last "<br>"
-        self.update_label(text)
-        self.colorWords(0)
+            text += line
+        text = text.strip()
+        print(text)
+
+        # reset stuff
+        self.typed = ""
+        self.originalText = text
+        self.update_label()
         self.index = 0
+        self.startTime = None
 
 app = QtWidgets.QApplication(sys.argv)
 
