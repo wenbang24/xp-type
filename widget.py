@@ -38,6 +38,13 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
                 self.pushButton.setFocusPolicy(Qt.NoFocus)
             except AttributeError:
                 print("cry about it")
+        try:
+            self.label.setAlignment(Qt.AlignCenter)
+        except AttributeError:
+            try:
+                self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            except AttributeError:
+                print("keep crying about it")
         self.index = 0
         self.startTime = None
 
