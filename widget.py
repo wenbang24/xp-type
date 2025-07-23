@@ -71,12 +71,18 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         return correct
 
     def keyPressEvent(self, a0):
+        key = a0.key()
         text = a0.text()
+        print("Key pressed:", key, "Text:", text)
         correct = 0
         if self.startTime is None:
             self.startTime = time()
         if len(self.typed) < len(self.originalText):
-            self.typed += text
+            if key == 16777219:
+                if len(self.typed) > 0:
+                    self.typed = self.typed[:-1]
+            else:
+                self.typed += text
             correct = self.update_label()
             rawWpm = int((len(self.typed) * 12) / max(0.0001, time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
             wpm = int((correct * 12) / max(0.0001, time() - self.startTime))
