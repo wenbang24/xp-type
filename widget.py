@@ -1,5 +1,5 @@
 import sys
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt
 import random
 from MainWindow import Ui_XPType
@@ -32,6 +32,12 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.charactersPerLine = 0
         self.typed = ""
         self.startTime = None
+        font = QtGui.QFont("Courier New", 32)
+        font.setStyleHint(QtGui.QFont.TypeWriter)
+        self.label.setFont(font)
+        metrics = QtGui.QFontMetrics(font)
+        self.fontWidth = metrics.horizontalAdvance("a")
+        self.fontHeight = metrics.height() + 2 * metrics.leading()
 
         self.label.setWordWrap(True)
         self.pushButton.clicked.connect(self.generateText)
@@ -83,17 +89,17 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
             else:
                 self.typed += text
             correct = self.update_label()
-            rawWpm = int((len(self.typed) * 12) / max(0.0001, time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
-            wpm = int((correct * 12) / max(0.0001, time() - self.startTime))
-            self.wpm_label.setText("Raw WPM: " + str(rawWpm) + " | WPM: " + str(wpm) + " | Accuracy: " + str(int((correct / len(self.typed)) * 100)) + "%")
+            if len(self.typed) > 0:
+                rawWpm = int((len(self.typed) * 12) / max(0.0001, time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
+                wpm = int((correct * 12) / max(0.0001, time() - self.startTime))
+                self.wpm_label.setText("Raw WPM: " + str(rawWpm) + " | WPM: " + str(wpm) + " | Accuracy: " + str(int((correct / len(self.typed)) * 100)) + "%")
         super().keyPressEvent(a0)
 
     def generateText(self):
-        width, height = self.width(), self.height()
-        font_size = self.label.font().pointSize()
-        charactersPerLine = int(width // font_size)
+        width = self.label.width()
+        charactersPerLine = int(width // self.fontWidth)
         self.charactersPerLine = charactersPerLine
-        lines = int(height // (2 * font_size))
+        lines = 5
         text = ""
         for _ in range(lines):
             line = ""
