@@ -73,12 +73,11 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
     def keyPressEvent(self, a0):
         key = a0.key()
         text = a0.text()
-        print("Key pressed:", key, "Text:", text)
         correct = 0
         if self.startTime is None:
             self.startTime = time()
         if len(self.typed) < len(self.originalText):
-            if key == 16777219:
+            if key == 16777219: # backspace
                 if len(self.typed) > 0:
                     self.typed = self.typed[:-1]
             else:
