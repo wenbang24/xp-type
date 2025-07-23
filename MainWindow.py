@@ -48,6 +48,6 @@ class Ui_XPType(object):
     def retranslateUi(self, XPType):
         _translate = QtCore.QCoreApplication.translate
         XPType.setWindowTitle(_translate("XPType", "XP-Type"))
-        self.wpm_label.setText(_translate("XPType", "Raw WPM: 0 | WPM: 0"))
+        self.wpm_label.setText(_translate("XPType", "Raw WPM: 0 | WPM: 0 | Accuracy: 0%"))
         self.label.setText(_translate("XPType", "if you are seeing this then something is wrong"))
         self.pushButton.setText(_translate("XPType", "Reset"))

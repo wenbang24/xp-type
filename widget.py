@@ -32,6 +32,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.charactersPerLine = 0
         self.typed = ""
         self.startTime = None
+
         font = QtGui.QFont("Courier New", 32)
         font.setStyleHint(QtGui.QFont.TypeWriter)
         self.label.setFont(font)
