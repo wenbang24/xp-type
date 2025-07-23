@@ -85,7 +85,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
             correct = self.update_label()
             rawWpm = int((len(self.typed) * 12) / max(0.0001, time() - self.startTime)) # divide by 5 then multiply by 60 to convert from CPS to WPM
             wpm = int((correct * 12) / max(0.0001, time() - self.startTime))
-            self.wpm_label.setText("Raw WPM: " + str(rawWpm) + " | WPM: " + str(wpm))
+            self.wpm_label.setText("Raw WPM: " + str(rawWpm) + " | WPM: " + str(wpm) + " | Accuracy: " + str(int((correct / len(self.typed)) * 100)) + "%")
         super().keyPressEvent(a0)
 
     def generateText(self):
@@ -110,7 +110,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
 
         # reset stuff
         self.typed = ""
-        self.wpm_label.setText("Raw WPM: 0 | WPM: 0")
+        self.wpm_label.setText("Raw WPM: 0 | WPM: 0 | Accuracy: 0%")
         self.originalText = text
         self.update_label()
         self.startTime = None
