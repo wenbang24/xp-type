@@ -101,6 +101,9 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
     def keyPressEvent(self, a0):
         key = a0.key()
         text = a0.text()
+        if key == 16777220: # enter
+            self.generateText()
+            return
         correct = 0
         if self.startTime is None:
             self.startTime = time()
