@@ -27,7 +27,13 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
     def __init__(self, *args, obj=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
-        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        try:
+            self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        except AttributeError:
+            try:
+                self.setWindowFlags(Qt.FramelessWindowHint)
+            except AttributeError:
+                print(":(")
 
         self.originalText = ""
         self.charactersPerLine = 0
@@ -38,8 +44,10 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         font.setStyleHint(QtGui.QFont.TypeWriter)
         self.label.setFont(font)
         metrics = QtGui.QFontMetrics(font)
-        self.fontWidth = metrics.horizontalAdvance("a")
-        self.fontHeight = metrics.height() + 2 * metrics.leading()
+        #self.fontWidth = metrics.horizontalAdvance("a")
+        #self.fontHeight = metrics.height() + 2 * metrics.leading()
+        self.fontWidth = metrics.boundingRect("a").width()
+        self.fontHeight = metrics.boundingRect("a").height()
 
         self.label.setWordWrap(True)
         self.pushButton.clicked.connect(self.generateText)
