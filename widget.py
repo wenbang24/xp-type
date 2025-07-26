@@ -58,6 +58,13 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
                 self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
             except AttributeError:
                 print("keep crying about it")
+        try:
+            self.verticalLayout.setAlignment(self.label, Qt.AlignCenter)
+        except AttributeError:
+            try:
+                self.verticalLayout.setAlignment(self.label, Qt.AlignmentFlag.AlignCenter)
+            except AttributeError:
+                print("cry more about it")
 
     def update_label(self):
         coloredText = ""
@@ -101,14 +108,14 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         charactersPerLine = int(width // self.fontWidth)
         self.charactersPerLine = charactersPerLine
         self.label.setFixedWidth(charactersPerLine * self.fontWidth)
-        lines = 5
+        lines = 5 # seems like a good amount
         text = ""
         for _ in range(lines):
             line = ""
             while len(line) < charactersPerLine:
                 word = random.choice(words)
                 if len(line) + len(word) >= charactersPerLine:
-                    remCharacters = charactersPerLine - len(line)
+                    remCharacters = charactersPerLine - len(line) - 1
                     if remCharacters > 0:
                         word = random.choice(wordsByLen.get(remCharacters, words))
                 line += word + " "
