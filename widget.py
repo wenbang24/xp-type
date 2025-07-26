@@ -11,7 +11,7 @@ if getattr(sys, 'frozen', False):
 else:
     base = os.path.dirname(__file__)
 
-path = os.path.join(base, 'google-10000-english-no-swears.txt')
+path = os.path.join(base, 'words')
 
 with open(path, "r") as f:
     global words, wordsByLen
