@@ -107,6 +107,9 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         if key == 16777220: # enter
             self.generateText()
             return
+        if key == 16777216: # escape
+            self.close()
+            return
         correct = 0
         if self.startTime is None:
             self.startTime = time()
