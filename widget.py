@@ -98,6 +98,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.label.setText(coloredText)
         return correct
 
+    # TODO: optimise this (its so slowwwwwwww)
     def keyPressEvent(self, a0):
         key = a0.key()
         text = a0.text()
