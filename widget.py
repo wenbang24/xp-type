@@ -76,7 +76,10 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
                     coloredText += '<span style="color: white;">{}</span>'.format(self.typed[i])
                     correct += 1
                 else:
-                    coloredText += '<span style="color: #f38ba8; text-decoration: underline;">{}</span>'.format(self.typed[i])
+                    if self.typed[i] == " ":
+                        coloredText += '<span style="color: #8a0e31; text-decoration: underline;">{}</span>'.format(self.originalText[i])
+                    else:
+                        coloredText += '<span style="color: #f38ba8; text-decoration: underline;">{}</span>'.format(self.typed[i])
             elif i == len(self.typed):
                 coloredText += '<span style="color: grey; text-decoration: underline;">{}</span>'.format(self.originalText[i])
             else:
