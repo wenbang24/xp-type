@@ -44,10 +44,12 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         font.setStyleHint(QtGui.QFont.TypeWriter)
         self.label.setFont(font)
         metrics = QtGui.QFontMetrics(font)
-        #self.fontWidth = metrics.horizontalAdvance("a")
-        #self.fontHeight = metrics.height() + 2 * metrics.leading()
-        self.fontWidth = metrics.boundingRect("a").width()
-        self.fontHeight = metrics.boundingRect("a").height()
+        try:
+            self.fontWidth = metrics.horizontalAdvance("a")
+            self.fontHeight = metrics.height() + 2 * metrics.leading()
+        except AttributeError: # XP compatibility
+            self.fontWidth = metrics.boundingRect("a").width()
+            self.fontHeight = metrics.boundingRect("a").height()
 
         self.label.setWordWrap(True)
         self.pushButton.clicked.connect(self.generateText)
