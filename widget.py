@@ -27,6 +27,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
     def __init__(self, *args, obj=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
 
         self.originalText = ""
         self.charactersPerLine = 0
