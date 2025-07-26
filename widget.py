@@ -3,6 +3,7 @@ from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt
 import random
 from MainWindow import Ui_XPType
+from SettingsDialog import SettingsDialog
 from time import time
 import os
 
@@ -39,6 +40,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.charactersPerLine = 0
         self.typed = ""
         self.startTime = None
+        self.numLines = 5
 
         font = QtGui.QFont("Courier New", 32)
         font.setStyleHint(QtGui.QFont.TypeWriter)
@@ -52,6 +54,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
             self.fontHeight = metrics.boundingRect("a").height()
 
         self.closeButton.clicked.connect(self.close)
+        self.settingsButton.clicked.connect(self.openSettingsDialog)
 
         self.label.setWordWrap(True)
         self.pushButton.clicked.connect(self.generateText)
@@ -59,9 +62,13 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.pushButton.setDefault(False)
         try:
             self.pushButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+            self.settingsButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+            self.closeButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         except AttributeError:
             try:
                 self.pushButton.setFocusPolicy(Qt.NoFocus)
+                self.settingsButton.setFocusPolicy(Qt.NoFocus)
+                self.closeButton.setFocusPolicy(Qt.NoFocus)
             except AttributeError:
                 print("cry about it")
         try:
@@ -78,6 +85,12 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
                 self.verticalLayout.setAlignment(self.label, Qt.AlignmentFlag.AlignCenter)
             except AttributeError:
                 print("cry more about it")
+
+
+    def openSettingsDialog(self):
+        dialog = SettingsDialog(currentLines=self.numLines, parent=self)
+        if dialog.exec_() == QtWidgets.QDialog.Accepted:
+            self.numLines = dialog.getValue()
 
     def update_label(self):
         coloredText = ""
@@ -131,7 +144,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         charactersPerLine = int(width // self.fontWidth)
         self.charactersPerLine = charactersPerLine
         self.label.setFixedWidth(charactersPerLine * self.fontWidth)
-        lines = 5 # seems like a good amount
+        lines = self.numLines
         text = ""
         for _ in range(lines):
             line = ""
