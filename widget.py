@@ -11,7 +11,7 @@ if getattr(sys, 'frozen', False):
 else:
     base = os.path.dirname(__file__)
 
-path = os.path.join(base, 'words')
+path = os.path.join(base, 'words.txt')
 
 with open(path, "r") as f:
     global words, wordsByLen
@@ -100,6 +100,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         width = self.label.width()
         charactersPerLine = int(width // self.fontWidth)
         self.charactersPerLine = charactersPerLine
+        self.label.setFixedWidth(charactersPerLine * self.fontWidth)
         lines = 5
         text = ""
         for _ in range(lines):
