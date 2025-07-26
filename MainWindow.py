@@ -41,6 +41,9 @@ class Ui_XPType(object):
         self.pushButton = QtWidgets.QPushButton(XPType)
         self.pushButton.setObjectName("pushButton")
         self.verticalLayout.addWidget(self.pushButton)
+        self.closeButton = QtWidgets.QPushButton(XPType)
+        self.closeButton.setObjectName("closeButton")
+        self.verticalLayout.addWidget(self.closeButton)
 
         self.retranslateUi(XPType)
         QtCore.QMetaObject.connectSlotsByName(XPType)
@@ -51,3 +54,4 @@ class Ui_XPType(object):
         self.wpm_label.setText(_translate("XPType", "Raw WPM: 0 | WPM: 0 | Accuracy: 0%"))
         self.label.setText(_translate("XPType", "if you are seeing this then something is wrong"))
         self.pushButton.setText(_translate("XPType", "Reset"))
+        self.closeButton.setText(_translate("XPType", "Close"))

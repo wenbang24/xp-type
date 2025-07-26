@@ -51,6 +51,8 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
             self.fontWidth = metrics.boundingRect("a").width()
             self.fontHeight = metrics.boundingRect("a").height()
 
+        self.closeButton.clicked.connect(self.close)
+
         self.label.setWordWrap(True)
         self.pushButton.clicked.connect(self.generateText)
         self.pushButton.setAutoDefault(False)
