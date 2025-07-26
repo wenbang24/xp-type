@@ -7,7 +7,7 @@ from time import time
 import os
 
 if getattr(sys, 'frozen', False):
-    base = sys._MEIPASS
+    base = sys._MEIPASS # pyinstaller compatibility
 else:
     base = os.path.dirname(__file__)
 
