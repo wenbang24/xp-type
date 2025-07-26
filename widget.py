@@ -7,7 +7,7 @@ from time import time
 import os
 
 if getattr(sys, 'frozen', False):
-    base = sys._MEIPASS # pyinstaller compatibility
+    base = sys._MEIPASS # pyinstaller onefile compatibility
 else:
     base = os.path.dirname(__file__)
 
@@ -100,7 +100,6 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.label.setText(coloredText)
         return correct
 
-    # TODO: optimise this (its so slowwwwwwww)
     def keyPressEvent(self, a0):
         key = a0.key()
         text = a0.text()
@@ -113,6 +112,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         correct = 0
         if self.startTime is None:
             self.startTime = time()
+        # TODO: optimise this (its so slowwwwwwww)
         if len(self.typed) < len(self.originalText):
             if key == 16777219: # backspace
                 if len(self.typed) > 0:
@@ -157,6 +157,6 @@ app = QtWidgets.QApplication(sys.argv)
 
 window = XPType()
 window.show()
-
 window.generateText()
+
 app.exec()
