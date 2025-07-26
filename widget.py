@@ -70,22 +70,16 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
                 self.settingsButton.setFocusPolicy(Qt.NoFocus)
                 self.closeButton.setFocusPolicy(Qt.NoFocus)
             except AttributeError:
-                print("cry about it")
+                print("dont press space :|")
         try:
             self.label.setAlignment(Qt.AlignCenter)
-        except AttributeError:
-            try:
-                self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            except AttributeError:
-                print("keep crying about it")
-        try:
             self.verticalLayout.setAlignment(self.label, Qt.AlignCenter)
         except AttributeError:
             try:
+                self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
                 self.verticalLayout.setAlignment(self.label, Qt.AlignmentFlag.AlignCenter)
             except AttributeError:
-                print("cry more about it")
-
+                print("no centering :(")
 
     def openSettingsDialog(self):
         dialog = SettingsDialog(currentLines=self.numLines, parent=self)
