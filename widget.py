@@ -110,6 +110,8 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         return correct
 
     def keyPressEvent(self, a0):
+        if a0 is None:
+            return
         key = a0.key()
         text = a0.text()
         if key == 16777220: # enter
