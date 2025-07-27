@@ -47,11 +47,11 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.label.setFont(font)
         metrics = QtGui.QFontMetrics(font)
         try:
-            self.fontWidth = metrics.horizontalAdvance("a")
+            self.fontWidth = metrics.horizontalAdvance("M")
             self.fontHeight = metrics.height() + 2 * metrics.leading()
         except AttributeError: # XP compatibility
-            self.fontWidth = metrics.boundingRect("a").width()
-            self.fontHeight = metrics.boundingRect("a").height()
+            self.fontWidth = metrics.boundingRect("M").width()
+            self.fontHeight = metrics.boundingRect("M").height()
 
         self.closeButton.clicked.connect(self.close)
         self.settingsButton.clicked.connect(self.openSettingsDialog)
@@ -138,25 +138,27 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         super().keyPressEvent(a0)
 
     def generateText(self):
-        width = self.label.width()
-        charactersPerLine = int(width // self.fontWidth)
-        self.charactersPerLine = charactersPerLine
-        self.label.setFixedWidth(charactersPerLine * self.fontWidth)
+        self.charactersPerLine = int(self.width() // self.fontWidth) - 3
+        self.label.setFixedWidth((self.charactersPerLine + 1) * self.fontWidth)
         lines = self.numLines
         text = ""
-        for _ in range(lines):
+        for i in range(lines):
             line = ""
-            while len(line) < charactersPerLine:
+            while len(line) < self.charactersPerLine:
                 word = random.choice(words)
-                if len(line) + len(word) >= charactersPerLine:
-                    remCharacters = charactersPerLine - len(line) - 1
+                if i == lines - 1 and len(line) + len(word) + 7 >= self.charactersPerLine:
+                    word = random.choice(wordsByLen.get(self.charactersPerLine - len(line), words))
+                elif len(line) + len(word) >= self.charactersPerLine:
+                    remCharacters = self.charactersPerLine - len(line) - 1
                     if remCharacters > 0:
                         word = random.choice(wordsByLen.get(remCharacters, words))
+                    else:
+                        word = ""
                 line += word + " "
             text += line
         text = text.strip()
 
-        # reset stuff
+        # reset everything
         self.typed = ""
         self.wpm_label.setText("Raw WPM: 0 | WPM: 0 | Accuracy: 0%")
         self.originalText = text
