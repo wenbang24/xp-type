@@ -1,6 +1,9 @@
 # XP-type
 A typing test app for Windows XP (technically cross platform but designed for XP)
 
+## Installing
+Download the latest release from the [releases page](https://github.com/wenbang24/xp-type/releases)
+
 ## Building
 This guide is intended for Windows XP. Change versions accordingly for other operating systems.
 1. Install Python 3.4
