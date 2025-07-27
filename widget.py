@@ -34,7 +34,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
             try:
                 self.setWindowFlags(Qt.FramelessWindowHint)
             except AttributeError:
-                print(":(")
+                print("no cool looking window :(")
 
         self.originalText = ""
         self.charactersPerLine = 0
@@ -151,7 +151,6 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
                 line += word + " "
             text += line
         text = text.strip()
-        print(text)
 
         # reset stuff
         self.typed = ""
