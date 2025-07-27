@@ -15,22 +15,27 @@ class Ui_XPType(object):
     def setupUi(self, XPType):
         XPType.setObjectName("XPType")
         XPType.resize(800, 600)
+        
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(XPType.sizePolicy().hasHeightForWidth())
         XPType.setSizePolicy(sizePolicy)
         XPType.setMinimumSize(QtCore.QSize(400, 400))
+        
         self.verticalLayout = QtWidgets.QVBoxLayout(XPType)
         self.verticalLayout.setObjectName("verticalLayout")
+        
         self.wpm_label = QtWidgets.QLabel(XPType)
         self.wpm_label.setMaximumSize(QtCore.QSize(16777215, 30))
+        
         font = QtGui.QFont()
         font.setFamily("Courier New")
         font.setPointSize(16)
         self.wpm_label.setFont(font)
         self.wpm_label.setObjectName("wpm_label")
         self.verticalLayout.addWidget(self.wpm_label)
+        
         self.label = QtWidgets.QLabel(XPType)
         font = QtGui.QFont()
         font.setFamily("Courier New")
@@ -38,15 +43,19 @@ class Ui_XPType(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
+        
         self.horizontalLayout = QtWidgets.QHBoxLayout(XPType)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.verticalLayout.addLayout(self.horizontalLayout)
+        
         self.pushButton = QtWidgets.QPushButton(XPType)
         self.pushButton.setObjectName("pushButton")
         self.horizontalLayout.addWidget(self.pushButton)
+        
         self.settingsButton = QtWidgets.QPushButton(XPType)
         self.settingsButton.setObjectName("settingsButton")
         self.horizontalLayout.addWidget(self.settingsButton)
+        
         self.closeButton = QtWidgets.QPushButton(XPType)
         self.closeButton.setObjectName("closeButton")
         self.horizontalLayout.addWidget(self.closeButton)

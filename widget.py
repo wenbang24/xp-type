@@ -84,7 +84,9 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
     def openSettingsDialog(self):
         dialog = SettingsDialog(currentLines=self.numLines, parent=self)
         if dialog.exec_() == QtWidgets.QDialog.Accepted:
-            self.numLines = dialog.getValue()
+            if self.numLines != dialog.getValue():
+                self.numLines = dialog.getValue()
+                self.generateText()
 
     def update_label(self):
         coloredText = ""
@@ -119,7 +121,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         correct = 0
         if self.startTime is None:
             self.startTime = time()
-        # TODO: optimise this (its so slowwwwwwww)
+        # TODO: optimise this (its so slow)
         if len(self.typed) < len(self.originalText):
             if key == 16777219: # backspace
                 if len(self.typed) > 0:
