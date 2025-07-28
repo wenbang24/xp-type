@@ -57,6 +57,10 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.settingsButton.clicked.connect(self.openSettingsDialog)
 
         self.setStyleSheet("background-color: #1e1e2e;")
+        self.wpm_label.setStyleSheet("color: #cdd6f4;")
+        self.pushButton.setStyleSheet("color: #cdd6f4; background-color: #45475a;")
+        self.settingsButton.setStyleSheet("color: #cdd6f4; background-color: #45475a;")
+        self.closeButton.setStyleSheet("color: #cdd6f4; background-color: #45475a;")
 
         self.label.setWordWrap(True)
         self.pushButton.clicked.connect(self.generateText)
@@ -96,7 +100,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         for i in range(len(self.originalText)):
             if i < len(self.typed):
                 if self.typed[i] == self.originalText[i]:
-                    coloredText += '<span style="color: white;">{}</span>'.format(self.typed[i])
+                    coloredText += '<span style="color: #cdd6f4;">{}</span>'.format(self.typed[i])
                     correct += 1
                 else:
                     if self.typed[i] == " ":
