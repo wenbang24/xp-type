@@ -56,6 +56,8 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
         self.closeButton.clicked.connect(self.close)
         self.settingsButton.clicked.connect(self.openSettingsDialog)
 
+        self.setStyleSheet("background-color: #1e1e2e;")
+
         self.label.setWordWrap(True)
         self.pushButton.clicked.connect(self.generateText)
         self.pushButton.setAutoDefault(False)
