@@ -153,7 +153,7 @@ class XPType(QtWidgets.QWidget, Ui_XPType):
             while len(line) < self.charactersPerLine:
                 word = random.choice(words)
                 if i == lines - 1 and len(line) + len(word) + 7 >= self.charactersPerLine:
-                    word = random.choice(wordsByLen.get(self.charactersPerLine - len(line) - 1, words))
+                    word = random.choice(wordsByLen.get(self.charactersPerLine - len(line) - 1, words)) # on mac get rid of the -1 for centered last line
                 elif len(line) + len(word) >= self.charactersPerLine:
                     remCharacters = self.charactersPerLine - len(line) - 1
                     if remCharacters > 0:
